@@ -8,13 +8,14 @@
    cd ktp
    ```
 
-2. **Set up environment variables**
+2. **Set up environment variables (Optional for local development)**
    ```bash
-   # Copy the example environment file
+   # Option 1: For local development with .env file
    cp env.example server/.env
-   
-   # Edit the .env file with your actual API keys
    nano server/.env  # or use your preferred editor
+   
+   # Option 2: Use the secure token management system (Recommended)
+   # Just run the app and input tokens through the Streamlit interface
    ```
 
 3. **Install dependencies**
@@ -120,10 +121,39 @@
 
 ## Deployment
 
+### Render Deployment (Recommended)
+
 For production deployment on Render:
 
 1. Connect your GitHub repository to Render
-2. Set the environment variables in Render dashboard
+2. Set the environment variables in Render dashboard:
+   - `OPENAI_API_KEY`
+   - `PINECONE_API_KEY` 
+   - `PINECONE_INDEX_NAME`
+   - `GITHUB_TOKEN` (optional)
+   - `NOTION_TOKEN` (optional)
+   - `SLACK_BOT_TOKEN` (optional)
 3. Deploy using the provided `render.yaml` configuration
 
-The application will automatically use the production configuration when deployed. 
+The application will automatically use the production configuration when deployed.
+
+### Local Development
+
+For local development, you have two options:
+
+1. **Use .env file** (for convenience):
+   - Copy `env.example` to `server/.env`
+   - Add your API keys to the file
+
+2. **Use secure token management** (recommended):
+   - Run the application
+   - Go to the Integrations page in Streamlit
+   - Input your API keys through the secure interface
+   - Keys are encrypted and stored in `secure_tokens.json`
+
+### Security Notes
+
+- **Never commit API keys to Git** - They're excluded by `.gitignore`
+- **Use environment variables in production** - Set them in your deployment platform
+- **The secure token system encrypts user-input keys** - Stored locally in `secure_tokens.json`
+- **Rotate API keys regularly** - Especially if they've been exposed 
