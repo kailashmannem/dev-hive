@@ -21,7 +21,7 @@ API_BASE = os.getenv("FLASK_API_URL", "http://localhost:5000")
 
 def main():
     st.set_page_config(
-        page_title="KTP - Knowledge Transfer Platform",
+        page_title="DevHive - Unified Knowledge Hub",
         page_icon="🧠",
         layout="wide",
         initial_sidebar_state="expanded"
