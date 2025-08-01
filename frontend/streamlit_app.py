@@ -75,20 +75,69 @@ def main():
     .main .block-container {
         padding-top: 1rem;
     }
+    /* Navigation button styling - only for sidebar navigation */
+    [data-testid="stSidebar"] .stButton > button {
+        border-radius: 8px;
+        border: 2px solid #e0e0e0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin-bottom: 8px;
+    }
+    [data-testid="stSidebar"] .stButton > button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        border-color: #667eea;
+    }
+    /* Sidebar styling */
+    .css-1d391kg {
+        background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+    }
+    /* Navigation button highlighting */
+    .nav-button-active {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;
+        border-color: #28a745 !important;
+    }
     </style>
     """, unsafe_allow_html=True)
     
     # Header
-    st.markdown('<h1 class="main-header">🧠 KTP - Knowledge Transfer Platform</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header">🧠 DevHive - Unified Knowledge Hub</h1>', unsafe_allow_html=True)
     st.markdown("A collaborative platform designed to simplify and streamline technical knowledge sharing within teams.")
     
     # Sidebar
     with st.sidebar:
         st.header("🔧 Navigation")
-        page = st.selectbox(
-            "Choose a page:",
-            ["🏠 Dashboard", "📚 Knowledge Base", "🔍 Search", "❓ Q&A", "🔗 Integrations", "🎯 Learning Path"]
-        )
+        
+        # Convert dropdown to separate buttons
+        st.markdown("**Choose a page:**")
+        
+        # Navigation buttons with better styling
+        if st.button("🏠 Dashboard", use_container_width=True, key="nav_dashboard"):
+            st.session_state.current_page = "🏠 Dashboard"
+        
+        if st.button("📚 Knowledge Base", use_container_width=True, key="nav_knowledge"):
+            st.session_state.current_page = "📚 Knowledge Base"
+        
+        if st.button("🔍 Search", use_container_width=True, key="nav_search"):
+            st.session_state.current_page = "🔍 Search"
+        
+        if st.button("❓ Q&A", use_container_width=True, key="nav_qa"):
+            st.session_state.current_page = "❓ Q&A"
+        
+        if st.button("🔗 Integrations", use_container_width=True, key="nav_integrations"):
+            st.session_state.current_page = "🔗 Integrations"
+        
+        if st.button("🎯 Learning Path", use_container_width=True, key="nav_learning"):
+            st.session_state.current_page = "🎯 Learning Path"
+        
+        # Initialize current page if not set
+        if 'current_page' not in st.session_state:
+            st.session_state.current_page = "🏠 Dashboard"
+        
+        st.divider()
         
         st.header("⚡ Quick Actions")
         if st.button("🔄 Check Server Health"):
@@ -104,7 +153,9 @@ def main():
             else:
                 integrate_all_sources()
     
-    # Page routing
+    # Page routing based on session state
+    page = st.session_state.current_page
+    
     if page == "🏠 Dashboard":
         show_dashboard()
     elif page == "📚 Knowledge Base":
@@ -135,7 +186,7 @@ def show_dashboard():
     
     # Welcome message
     st.markdown("""
-    ### Welcome to KTP - Knowledge Transfer Platform! 🧠
+    ### Welcome to DevHive - Unified Knowledge Hub! 🧠
     
     This platform helps you manage and access knowledge from multiple sources including GitHub repositories, Notion workspaces, and Slack conversations.
     
